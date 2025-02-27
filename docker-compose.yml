@@ -1,5 +1,5 @@
 services:
-  postgres:
+  db:
     image: postgres:latest
     container_name: postgres
     restart: always
@@ -11,7 +11,26 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+  backend:
+    image: node:22.13-alpine3.20
+    working_dir: /backend
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "3250:3250"
+    command: ["sh", "-c", "npm install && npm run build && npm run start"]
+    environment:
+      - NODE_ENV=development
+      - PORT=3250
+      - DB_HOST=db
+      - DB=adm_test
+      - DB_USR=ash
+      - DB_PWD=root
+      - DB_PORT=5432
+      - SECRET_KEY=superSecretKey
+      - ALLOWED_USER=apiUsr
+      - ALLOWED_PWD=apiPwd
 volumes:
   postgres-data:
     driver: local
