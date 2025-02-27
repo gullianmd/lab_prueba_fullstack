@@ -13,13 +13,15 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./resources/init.sql:/docker-entrypoint-initdb.d/init.sql
   backend:
-    image: node:22.13-alpine3.20
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: node-express
     working_dir: /backend
     volumes:
       - ./backend:/backend
     ports:
       - "3250:3250"
-    command: ["sh", "-c", "npm install && npm run build && npm run start"]
     environment:
       - NODE_ENV=development
       - PORT=3250
@@ -31,6 +33,8 @@ services:
       - SECRET_KEY=superSecretKey
       - ALLOWED_USER=apiUsr
       - ALLOWED_PWD=apiPwd
+    depends_on:
+      - db
 volumes:
   postgres-data:
     driver: local
