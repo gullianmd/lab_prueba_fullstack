@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: registryopenshift.azurecr.io/ensayo-admin-front
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+imagePullSecrets: 
+- name: sto-tomas-registry
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+nodeSelector:
+  env: prod
+tolerations: []
+affinity: {}
+
+type: "OKE"
+
+ingress:
+  domain: ensayo-admin.santotomas.cl
+  path: "/"
+
+route:
+  domain: ensayo-admin.santotomas.cl
+  first_ca: ""
+  second_ca: ""
+  cert: ""
+  key: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  PORT: 3000
