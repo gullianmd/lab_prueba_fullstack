@@ -22,7 +22,7 @@ export default function NavVar() {
 function SmMenu() {
   return (
     <div className="flex md:hidden items-center justify-between w-full">
-      <ul className="font-normal  text-sm flex flex-row">
+      <ul className="font-normal text-sm text-white flex flex-row">
         <li>
           <Link href={"/"} className="block py-1 px-2">Home</Link>
         </li>
@@ -37,7 +37,7 @@ function SmMenu() {
 function MdMenu() {
   return (
     <div className="hidden md:flex xl:hidden items-center justify-between w-full">
-      <ul className="font-medium text-sm flex flex-row text">
+      <ul className="font-medium text-base text-white flex flex-row text">
         <li>
           <Link href={"/"} className="block py-1 px-2">Home</Link>
         </li>
